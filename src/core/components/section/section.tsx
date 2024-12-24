@@ -13,16 +13,16 @@ export function Section(props: ISection) {
 		}
 		renderedSections.add(sectionData.Id);
 
-		const sectionFields = ApiService.getFields().filter((field) => sectionData.FieldIds?.includes(field.Id));
+		const sectionFields = sectionData.FieldIds?.map((fieldId) =>
+			ApiService.getFields().find((field) => field.Id === fieldId),
+		);
 		const sectionId = parentSectionId ? `${parentSectionId}:${sectionData.Id}` : sectionData.Id;
 		const { fieldset, legend } = variances({ subSection: Boolean(parentSectionId) });
 
 		return (
 			<fieldset key={sectionData.Id} className={fieldset()}>
 				<legend className={legend()}>{sectionData.Title}</legend>
-				{sectionFields.map((field) => (
-					<Field key={field.Id} sectionId={sectionId} {...field} />
-				))}
+				{sectionFields?.map((field) => <Field key={field.Id} sectionId={sectionId} {...field} />)}
 				{sectionData.SubSectionIds?.map((subSectionId) => {
 					const subSection = ApiService.getSections().find((s) => s.Id === subSectionId);
 					return subSection ? renderSection(subSection, sectionData.Id) : null;
