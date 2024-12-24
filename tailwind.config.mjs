@@ -1,5 +1,4 @@
 import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
 import daisy from 'daisyui';
 
 export function shortcuts({ addUtilities }) {
@@ -34,5 +33,5 @@ export default {
 		logs: false,
 		themeRoot: ':root',
 	},
-	plugins: [forms, typography, shortcuts, daisy],
+	plugins: [forms, shortcuts, daisy],
 };
